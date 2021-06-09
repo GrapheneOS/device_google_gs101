@@ -480,6 +480,7 @@ on fs
     chown system system /sys/class/backlight/panel0-backlight/brightness
     chown system system /sys/class/backlight/panel0-backlight/dimming_on
     chown system system /sys/class/backlight/panel0-backlight/hbm_mode
+    chown system system /sys/class/backlight/panel0-backlight/local_hbm_mode
     chown system system /sys/devices/platform/exynos-drm/primary-panel/gamma
     chown system system /sys/module/drm/parameters/vblankoffdelay
     chown system system /sys/class/dqe/atc/ambient_light
@@ -815,9 +816,3 @@ on property:vendor.disable.bcl.control=1
 
 on property:vendor.disable.bcl.control=0
     write /sys/devices/virtual/pmic/mitigation/instruction/enable_mitigation 1
-
-# For Japan radio builds, always enforce camera shutter sound
-# Since this property is read by the audio server in system service,
-# it should be written by the system init.
-on property:ro.boot.hardware.radio.subtype=1
-    setprop audio.camerasound.force true

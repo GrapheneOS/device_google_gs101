@@ -633,6 +633,8 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.set_touch_timer_ms=200
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.set_display_power_timer_ms=1000
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.use_content_detection_for_refresh_rate=true
 
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.supports_background_blur=1
+
 # Must align with HAL types Dataspace
 # The data space of wide color gamut composition preference is Dataspace::DISPLAY_P3
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.wcg_composition_dataspace=143261696
@@ -984,6 +986,7 @@ PRODUCT_PACKAGES += \
 	audio_usb_aoc \
 	audio_spk_35l41 \
 	audio.usb.default \
+	audio.usbv2.default \
 	audio.a2dp.default \
 	audio.bluetooth.default \
 	audio.r_submix.default \
@@ -1072,10 +1075,6 @@ PRODUCT_PROPERTY_OVERRIDES += persist.vendor.enable.thermal.genl=true
 # TPU firmware
 PRODUCT_PACKAGES += \
 	edgetpu-abrolhos.fw
-
-# TPU NN HAL
-PRODUCT_PACKAGES += \
-	android.hardware.neuralnetworks@1.3-service-darwinn
 
 # TPU NN AIDL HAL
 PRODUCT_PACKAGES += \
