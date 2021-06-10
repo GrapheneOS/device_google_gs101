@@ -188,6 +188,104 @@
         ""
       ],
       "Type": "Property"
+    },
+    {
+      "Name": "INTCAMFreq",
+      "Path": "/sys/devices/platform/17000030.devfreq_intcam/devfreq/17000030.devfreq_intcam/min_freq",
+      "Values": [
+        "664000",
+        "67000"
+      ],
+      "ResetOnInit": true
+    },
+    {
+      "Name": "TNRFreq",
+      "Path": "/sys/devices/platform/17000060.devfreq_tnr/devfreq/17000060.devfreq_tnr/min_freq",
+      "Values": [
+        "664000",
+        "67000"
+      ],
+      "ResetOnInit": true
+    },
+    {
+      "Name": "BigControlTempSet",
+      "Path": "/dev/thermal/tz-by-name/BIG/trip_point_2_temp",
+      "Values": [
+        "90000",
+        "80000"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": false
+    },
+    {
+      "Name": "MidControlTempSet",
+      "Path": "/dev/thermal/tz-by-name/MID/trip_point_2_temp",
+      "Values": [
+        "90000",
+        "80000"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": false
+    },
+    {
+      "Name": "LittleControlTempSet",
+      "Path": "/dev/thermal/tz-by-name/LITTLE/trip_point_2_temp",
+      "Values": [
+        "90000",
+        "80000"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": false
+    },
+    {
+      "Name": "G3dControlTempSet",
+      "Path": "/dev/thermal/tz-by-name/G3D/trip_point_2_temp",
+      "Values": [
+        "90000",
+        "80000"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": false
+    },
+    {
+      "Name": "BigSwitchOnTempSet",
+      "Path": "/dev/thermal/tz-by-name/BIG/trip_point_1_temp",
+      "Values": [
+        "70000",
+        "60000"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": false
+    },
+    {
+      "Name": "MidSwitchOnTempSet",
+      "Path": "/dev/thermal/tz-by-name/MID/trip_point_1_temp",
+      "Values": [
+        "70000",
+        "60000"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": false
+    },
+    {
+      "Name": "LittleSwitchOnTempSet",
+      "Path": "/dev/thermal/tz-by-name/LITTLE/trip_point_1_temp",
+      "Values": [
+        "70000",
+        "60000"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": false
+    },
+    {
+      "Name": "G3dSwitchOnTempSet",
+      "Path": "/dev/thermal/tz-by-name/G3D/trip_point_1_temp",
+      "Values": [
+        "70000",
+        "60000"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": false
     }
   ],
   "Actions": [
@@ -320,6 +418,24 @@
       "Node": "F2fsRecessModeEnable",
       "Duration": 0,
       "Value": "2"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "MemFreq",
+      "Duration": 1000,
+      "Value": "3172000"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "INTCAMFreq",
+      "Duration": 1000,
+      "Value": "664000"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "TNRFreq",
+      "Duration": 1000,
+      "Value": "664000"
     },
     {
       "PowerHint": "CAMERA_LAUNCH",
@@ -664,6 +780,54 @@
       "Node": "GPUMinFreq",
       "Duration": 0,
       "Value": "400000"
+    },
+    {
+      "PowerHint": "THERMAL_VIRTUAL-SKIN_SEVERE",
+      "Node": "BigControlTempSet",
+      "Duration": 0,
+      "Value": "80000"
+    },
+    {
+      "PowerHint": "THERMAL_VIRTUAL-SKIN_SEVERE",
+      "Node": "MidControlTempSet",
+      "Duration": 0,
+      "Value": "80000"
+    },
+    {
+      "PowerHint": "THERMAL_VIRTUAL-SKIN_SEVERE",
+      "Node": "LittleControlTempSet",
+      "Duration": 0,
+      "Value": "80000"
+    },
+    {
+      "PowerHint": "THERMAL_VIRTUAL-SKIN_SEVERE",
+      "Node": "G3dControlTempSet",
+      "Duration": 0,
+      "Value": "80000"
+    },
+    {
+      "PowerHint": "THERMAL_VIRTUAL-SKIN_SEVERE",
+      "Node": "BigSwitchOnTempSet",
+      "Duration": 0,
+      "Value": "60000"
+    },
+    {
+      "PowerHint": "THERMAL_VIRTUAL-SKIN_SEVERE",
+      "Node": "MidSwitchOnTempSet",
+      "Duration": 0,
+      "Value": "60000"
+    },
+    {
+      "PowerHint": "THERMAL_VIRTUAL-SKIN_SEVERE",
+      "Node": "LittleSwitchOnTempSet",
+      "Duration": 0,
+      "Value": "60000"
+    },
+    {
+      "PowerHint": "THERMAL_VIRTUAL-SKIN_SEVERE",
+      "Node": "G3dSwitchOnTempSet",
+      "Duration": 0,
+      "Value": "60000"
     }
   ]
 }
