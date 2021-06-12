@@ -108,8 +108,8 @@
       "Path": "/sys/kernel/vendor_sched/ta_uclamp_min",
       "Values": [
         "1",
-	"553",
-	"246",
+        "553",
+        "246",
         "185",
         "123",
         "62"
@@ -302,12 +302,6 @@
       "PowerHint": "INTERACTION",
       "Type": "EndHint",
       "Value": "DISABLE_TA_BOOST"
-    },
-    {
-      "PowerHint": "INTERACTION",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 6000,
-      "Value": "1197000"
     },
     {
       "PowerHint": "INTERACTION",
@@ -843,6 +837,18 @@
       "Node": "G3dSwitchOnTempSet",
       "Duration": 0,
       "Value": "60000"
+    },
+    {
+      "PowerHint": "FP_BOOST",
+      "Node": "CPUBigClusterMaxFreq",
+      "Duration": 1000,
+      "Value": "9999999"
+    },
+    {
+      "PowerHint": "FP_BOOST",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 1000,
+      "Value": "9999999"
     }
   ]
 }
