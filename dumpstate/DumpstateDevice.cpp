@@ -255,6 +255,7 @@ DumpstateDevice::DumpstateDevice()
         { "misc", [this](int fd) { dumpMiscSection(fd); } },
         { "gsc", [this](int fd) { dumpGscSection(fd); } },
         { "camera", [this](int fd) { dumpCameraSection(fd); } },
+        { "trusty", [this](int fd) { dumpTrustySection(fd); } },
     } {
 }
 
@@ -564,6 +565,12 @@ void DumpstateDevice::dumpTouchSection(int fd) {
                      stm_cmd_path[i + 1], stm_cmd_path[i + 1]);
             RunCommandToFd(fd, "Packaging Plant - Read 16 bytes from Address 0x00041FD8",
                            {"/vendor/bin/sh", "-c", cmd});
+
+            snprintf(cmd, sizeof(cmd),
+                     "echo 01 A4 06 C3 > %s; echo 02 A7 00 00 00 20 00 > %s && cat %s",
+                     stm_cmd_path[i + 1], stm_cmd_path[i + 1], stm_cmd_path[i + 1]);
+            RunCommandToFd(fd, "HDM debug information (32 bytes)",
+                           {"/vendor/bin/sh", "-c", cmd});
         }
 
         snprintf(cmd, sizeof(cmd), "%s/stm_fts_cmd", stm_cmd_path[i]);
@@ -647,6 +654,13 @@ void DumpstateDevice::dumpTouchSection(int fd) {
                  "run_rawdata_read_type,5",
                  lsi_spi_path, lsi_spi_path);
         RunCommandToFd(fd, "TYPE_DECODED_DATA", {"/vendor/bin/sh", "-c", cmd});
+
+        // TYPE_OFFSET_DATA_SEC
+        snprintf(cmd, sizeof(cmd),
+                 "echo %s > %s/cmd && cat %s/cmd_result",
+                 "run_rawdata_read_type,19",
+                 lsi_spi_path, lsi_spi_path);
+        RunCommandToFd(fd, "TYPE_OFFSET_DATA_SEC", {"/vendor/bin/sh", "-c", cmd});
 
         // TYPE_NOI_P2P_MIN
         snprintf(cmd, sizeof(cmd),
@@ -906,6 +920,10 @@ void DumpstateDevice::dumpCameraSection(int fd) {
                        "for f in $(ls -t /data/vendor/camera/hal_graph_state*.txt |head -1); do "
                        "echo $f ; cat $f ; done"},
                        CommandOptions::WithTimeout(4).Build());
+}
+
+void DumpstateDevice::dumpTrustySection(int fd) {
+    DumpFileToFd(fd, "Trusty TEE0 Logs", "/dev/trusty-log0");
 }
 
 void DumpstateDevice::dumpModem(int fd, int fdModem)
