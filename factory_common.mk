@@ -73,4 +73,4 @@ PRODUCT_SET_DEBUGFS_RESTRICTIONS := false
 
 # PixelLogger for RF testing
 PRODUCT_PACKAGES_DEBUG += \
-    PixelLogger \
+    PixelLogger
