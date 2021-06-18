@@ -19,6 +19,11 @@ include build/make/target/board/BoardConfigPixelCommon.mk
 # Should be uncommented after fixing vndk-sp violation is fixed.
 PRODUCT_FULL_TREBLE_OVERRIDE := true
 
+# This prop, when set to 1, will prevent OTA tooling from generating a VABC OTA,
+# even if device actually supports it.
+# Remove this once P21 decides to use VABC OTA
+BOARD_DONT_USE_VABC_OTA := true
+
 # HACK : To fix up after bring up multimedia devices.
 TARGET_SOC := gs101
 
@@ -374,30 +379,20 @@ BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
 # Vendor ramdisk image for kernel development
 BOARD_BUILD_VENDOR_RAMDISK_IMAGE := true
 
-# Kernel modules
-BOARD_VENDOR_KERNEL_MODULES += \
-    $(wildcard $(TARGET_KERNEL_DIR)/*.ko)
+KERNEL_MODULE_DIR := $(TARGET_KERNEL_DIR)
+KERNEL_MODULES := $(wildcard $(KERNEL_MODULE_DIR)/*.ko)
 
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_FILTER += \
-    $(TARGET_KERNEL_DIR)/bcmdhd43752.ko \
-    $(TARGET_KERNEL_DIR)/bcmdhd4389.ko \
-    $(TARGET_KERNEL_DIR)/lwis.ko \
-    $(TARGET_KERNEL_DIR)/pinctrl-slg51000.ko \
-    $(TARGET_KERNEL_DIR)/pktgen.ko \
-    $(TARGET_KERNEL_DIR)/slg51000-core.ko \
-    $(TARGET_KERNEL_DIR)/slg51000-regulator.ko \
-    $(TARGET_KERNEL_DIR)/stmvl53l1.ko \
-    $(TARGET_KERNEL_DIR)/ftm5.ko \
-    $(TARGET_KERNEL_DIR)/haptics-cs40l2x.ko \
-    $(TARGET_KERNEL_DIR)/snd_soc_cs40l2x.ko \
-    $(TARGET_KERNEL_DIR)/sec_touch.ko \
-    $(TARGET_KERNEL_DIR)/cl_dsp.ko \
-    $(TARGET_KERNEL_DIR)/input-cs40l26-i2c.ko
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_MODULE_DIR)/vendor_boot.modules.load))
+ifndef BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD
+$(error vendor_boot.modules.load not found or empty)
+endif
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(addprefix $(KERNEL_MODULE_DIR)/, $(notdir $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD)))
 
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES += \
-    $(filter-out $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_FILTER), $(foreach module, $(notdir \
-    $(shell cat $(TARGET_KERNEL_DIR)/modules.load)), \
-    $(TARGET_KERNEL_DIR)/$(module)))
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_MODULE_DIR)/vendor_dlkm.modules.load))
+ifndef BOARD_VENDOR_KERNEL_MODULES_LOAD
+$(error vendor_dlkm.modules.load not found or empty)
+endif
+BOARD_VENDOR_KERNEL_MODULES := $(KERNEL_MODULES)
 
 # Using BUILD_COPY_HEADERS
 BUILD_BROKEN_USES_BUILD_COPY_HEADERS := true
