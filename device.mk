@@ -216,13 +216,8 @@ DEVICE_MATRIX_FILE := \
 
 DEVICE_PACKAGE_OVERLAYS += device/google/gs101/overlay
 
-# This will be updated to 31 (Android S) for shipping
-PRODUCT_SHIPPING_API_LEVEL := 30
-
-# Enable the debugfs restriction before upgrading shipping abi level to 31 (Android S)
-ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
-PRODUCT_SET_DEBUGFS_RESTRICTIONS := true
-endif
+# This device is shipped with 31 (Android S)
+PRODUCT_SHIPPING_API_LEVEL := 31
 
 # Enforce the Product interface
 PRODUCT_PRODUCT_VNDK_VERSION := current
@@ -372,9 +367,6 @@ endif
 # Power HAL
 PRODUCT_COPY_FILES += \
 	device/google/gs101/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
-# adpf 16ms update rate
-PRODUCT_PRODUCT_PROPERTIES += \
-        vendor.powerhal.adpf.rate=16666666
 
 PRODUCT_COPY_FILES += \
 	device/google/gs101/task_profiles.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
