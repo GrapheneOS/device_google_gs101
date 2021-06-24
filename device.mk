@@ -725,7 +725,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
        debug.c2.use_dmabufheaps=1 \
        media.c2.dmabuf.padding=512 \
-       debug.stagefright.ccodec_delayed_params=1
+       debug.stagefright.ccodec_delayed_params=1 \
+       ro.vendor.gpu.dataspace=1
 
 # Create input surface on the framework side
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -1108,6 +1109,9 @@ include hardware/google/pixel/common/pixel-common-device.mk
 
 # Pixel Logger
 include hardware/google/pixel/PixelLogger/PixelLogger.mk
+
+# Telephony
+include device/google/gs101/telephony/user.mk
 
 # Battery Stats Viewer
 PRODUCT_PACKAGES_DEBUG += BatteryStatsViewer
