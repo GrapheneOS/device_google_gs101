@@ -110,7 +110,7 @@ PRODUCT_PRODUCT_PROPERTIES += \
 
 # Enable Early Camping
 PRODUCT_PRODUCT_PROPERTIES += \
-	persist.vendor.ril.camp_on_earlier=0
+	persist.vendor.ril.camp_on_earlier=1
 
 # Carrier configuration default location
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -462,10 +462,6 @@ else
 		android.hardware.graphics.allocator@2.0-impl \
 		gralloc.$(TARGET_BOARD_PLATFORM)
 endif
-
-# AIDL memtrack
-PRODUCT_PACKAGES += \
-	android.hardware.memtrack-service.example
 
 PRODUCT_PACKAGES += \
 	memtrack.$(TARGET_BOARD_PLATFORM) \
