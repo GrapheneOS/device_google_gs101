@@ -205,6 +205,14 @@ void dumpGpsLogs(int fd, std::string destDir) {
     dumpLogs(fd, gpsLogDir, gpsDestDir, maxFileNum, GPS_LOG_PREFIX);
 }
 
+void dumpCameraLogs(int fd, const std::string &destDir) {
+    static const std::string kCameraLogDir = "/data/vendor/camera/profiler";
+    const std::string cameraDestDir = destDir + "/camera";
+    RunCommandToFd(fd, "MKDIR CAMERA LOG", {"/vendor/bin/mkdir", "-p", cameraDestDir.c_str()},
+                   CommandOptions::WithTimeout(2).Build());
+    dumpLogs(fd, kCameraLogDir, cameraDestDir, 1, "session-ended-");
+}
+
 timepoint_t startSection(int fd, const std::string &sectionName) {
     android::base::WriteStringToFd(
             "\n"
@@ -345,16 +353,14 @@ void DumpstateDevice::dumpPowerSection(int fd) {
     }
 
     DumpFileToFd(fd, "PD Engine", "/dev/logbuffer_usbpd");
-    DumpFileToFd(fd, "PPS-google_cpm", "/dev/logbuffer_google,cpm");
-    DumpFileToFd(fd, "PPS-dc", "/dev/logbuffer_pca9468_tcpm");
+    DumpFileToFd(fd, "PPS-google_cpm", "/dev/logbuffer_cpm");
+    DumpFileToFd(fd, "PPS-dc", "/dev/logbuffer_pca9468");
 
     DumpFileToFd(fd, "BMS", "/dev/logbuffer_ssoc");
     DumpFileToFd(fd, "TTF", "/dev/logbuffer_ttf");
     DumpFileToFd(fd, "TTF details", "/sys/class/power_supply/battery/ttf_details");
     DumpFileToFd(fd, "TTF stats", "/sys/class/power_supply/battery/ttf_stats");
     DumpFileToFd(fd, "maxq", "/dev/logbuffer_maxq");
-    DumpFileToFd(fd, "RTX", "/dev/logbuffer_rtx");
-    DumpFileToFd(fd, "WIRELESS", "/dev/logbuffer_wireless");
 
     RunCommandToFd(fd, "TRICKLE-DEFEND Config", {"/vendor/bin/sh", "-c",
                         " cd /sys/devices/platform/google,battery/power_supply/battery/;"
@@ -996,6 +1002,8 @@ static void *dumpModemThread(void *data) {
     if (!PropertiesHelper::IsUserBuild()) {
         bool gpsLogEnabled = android::base::GetBoolProperty(GPS_LOGGING_STATUS_PROPERTY, false);
         bool tcpdumpEnabled = android::base::GetBoolProperty(TCPDUMP_PERSIST_PROPERTY, false);
+        bool cameraLogsEnabled = android::base::GetBoolProperty(
+                "vendor.camera.debug.camera_performance_analyzer.attach_to_bugreport", true);
 
         if (tcpdumpEnabled) {
             dumpLogs(STDOUT_FILENO, tcpdumpLogDir, modemLogAllDir, android::base::GetIntProperty(TCPDUMP_NUMBER_BUGREPORT, 5), TCPDUMP_LOG_PREFIX);
@@ -1005,6 +1013,10 @@ static void *dumpModemThread(void *data) {
             dumpGpsLogs(STDOUT_FILENO, modemLogAllDir);
         } else {
             ALOGD("gps logging is not running\n");
+        }
+
+        if (cameraLogsEnabled) {
+            dumpCameraLogs(STDOUT_FILENO, modemLogAllDir);
         }
 
         dumpLogs(STDOUT_FILENO, extendedLogDir, modemLogAllDir, 50, EXTENDED_LOG_PREFIX);
