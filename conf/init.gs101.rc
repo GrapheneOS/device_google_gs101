@@ -517,8 +517,10 @@ on fs
     chown system system /sys/class/dqe/atc/threshold_3
     chown system system /sys/class/dqe/atc/gain_limit
     chown system system /sys/class/dqe/atc/lt_calc_ab_shift
-    chown root graphics /sys/devices/platform/1c300000.drmdecon/early_wakeup
+    chown system system /sys/devices/platform/1c300000.drmdecon/early_wakeup
     chmod 0220 /sys/devices/platform/1c300000.drmdecon/early_wakeup
+    chown system system /sys/devices/platform/1c302000.drmdecon/early_wakeup
+    chmod 0220 /sys/devices/platform/1c302000.drmdecon/early_wakeup
 
 # Copy DRM Key
 #    copy /system/app/wv.keys /factory/wv.keys
@@ -839,6 +841,8 @@ on property:vendor.thermal.link_ready=1
     # Thermal
     chown system system /dev/thermal/tz-by-name/quiet_therm/trip_point_0_temp
     chown system system /dev/thermal/tz-by-name/quiet_therm/trip_point_0_hyst
+    chown system system /dev/thermal/tz-by-name/neutral_therm/trip_point_0_temp
+    chown system system /dev/thermal/tz-by-name/neutral_therm/trip_point_0_hyst
     chown system system /dev/thermal/cdev-by-name/thermal-cpufreq-0/user_vote
     chown system system /dev/thermal/cdev-by-name/thermal-cpufreq-1/user_vote
     chown system system /dev/thermal/cdev-by-name/thermal-cpufreq-2/user_vote
