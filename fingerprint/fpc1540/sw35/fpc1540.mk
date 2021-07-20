@@ -1,6 +1,6 @@
 # Factory build, use HIDL hal & extension so that we can use Test tool
 ifneq ( ,$(findstring factory, $(TARGET_PRODUCT)))
-include device/google/gs101/fingerprint/fpc1540/fingerprint_hidl_config_factory.mk
+include device/google/gs101/fingerprint/fpc1540/sw35/fingerprint_hidl_config_factory.mk
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1-service.fpc \
     fpc_tee_test\
@@ -18,10 +18,10 @@ PRODUCT_COPY_FILES += \
 
 else
 # Non facotry build, use fingerprint AIDL version
-include device/google/gs101/fingerprint/fpc1540/fingerprint_aidl_config.mk
+include device/google/gs101/fingerprint/fpc1540/sw35/fingerprint_aidl_config.mk
 
 PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint-service.fpc \
+    android.hardware.biometrics.fingerprint-service.fpc35 \
     fingerprint.fpc \
 
 PRODUCT_COPY_FILES += \
