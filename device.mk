@@ -318,7 +318,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	persist.vendor.sys.silentlog.tcp = "On" \
 	ro.vendor.cbd.modem_removable = "1" \
 	ro.vendor.cbd.modem_type = "s5100sit" \
-	persist.vendor.sys.modem.logging.br_num=5
+	persist.vendor.sys.modem.logging.br_num=5 \
+	persist.vendor.sys.modem.logging.enable=true
 
 # Enable silent CP crash handling
 ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
@@ -699,7 +700,7 @@ SOONG_CONFIG_bigo_soc := gs101
 
 # MFC firmware
 PRODUCT_COPY_FILES += \
-	device/google/gs101/firmware/mfc_fw_v14.2.bin:$(TARGET_COPY_OUT_VENDOR)/firmware/mfc_fw.bin
+	device/google/gs101/firmware/mfc/signed/mfc_fw.bin:$(TARGET_COPY_OUT_VENDOR)/firmware/mfc_fw.bin
 
 # 1. Codec 2.0
 # exynos service
