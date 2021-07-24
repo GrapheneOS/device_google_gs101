@@ -617,7 +617,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	debug.sf.enable_gl_backpressure=1
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += debug.sf.use_phase_offsets_as_durations=1
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += debug.sf.late.sf.duration=8300000
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += debug.sf.late.sf.duration=10500000
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += debug.sf.late.app.duration=16600000
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += debug.sf.early.sf.duration=16600000
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += debug.sf.early.app.duration=16600000
@@ -888,6 +888,7 @@ USE_RADIO_HAL_1_6 := true
 
 ifneq ($(BOARD_WITHOUT_RADIO),true)
 $(call inherit-product-if-exists, vendor/samsung_slsi/telephony/common/device-vendor.mk)
+PRODUCT_COPY_FILES += frameworks/native/data/etc/android.hardware.telephony.cdma.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.cdma.xml
 endif
 
 ifeq (,$(filter %_64,$(TARGET_PRODUCT)))

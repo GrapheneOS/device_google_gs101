@@ -125,6 +125,8 @@ on init
     write /sys/kernel/vendor_sched/ta_prefer_idle 1
     write /sys/kernel/vendor_sched/fg_uclamp_min 308
     write /sys/kernel/vendor_sched/fg_prefer_idle 1
+    write /sys/kernel/vendor_sched/sys_uclamp_min 308
+    write /sys/kernel/vendor_sched/sys_prefer_idle 1
 
     # governor setting
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor sched_pixel
@@ -146,6 +148,24 @@ on init
     chown system system /dev/cpuctl/camera-daemon/cpu.uclamp.max
     chown root root /dev/cpuctl/camera-daemon/cpu.uclamp.latency_sensitive
     chown system system /dev/cpuctl/camera-daemon/cgroup.procs
+
+    mkdir /dev/cpuset/camera-daemon-high-group
+    write /dev/cpuset/camera-daemon-high-group/cpus 0-7
+    write /dev/cpuset/camera-daemon-high-group/mems 0
+    chown system system /dev/cpuset/camera-daemon-high-group/tasks
+    chmod 0664 /dev/cpuset/camera-daemon-high-group/tasks
+
+    mkdir /dev/cpuset/camera-daemon-mid-group
+    write /dev/cpuset/camera-daemon-mid-group/cpus 0-7
+    write /dev/cpuset/camera-daemon-mid-group/mems 0
+    chown system system /dev/cpuset/camera-daemon-mid-group/tasks
+    chmod 0664 /dev/cpuset/camera-daemon-mid-group/tasks
+
+    mkdir /dev/cpuset/camera-daemon-mid-high-group
+    write /dev/cpuset/camera-daemon-mid-high-group/cpus 0-7
+    write /dev/cpuset/camera-daemon-mid-high-group/mems 0
+    chown system system /dev/cpuset/camera-daemon-mid-high-group/tasks
+    chmod 0664 /dev/cpuset/camera-daemon-mid-high-group/tasks
 
     write /sys/kernel/vendor_sched/cam_prefer_idle 1
     write /sys/kernel/vendor_sched/cam_uclamp_min 1
@@ -193,6 +213,19 @@ on init
 
     # Wireless Charge stats (write 0)
     chown system system /sys/class/power_supply/wireless/device/charge_stats
+
+    # Permission for wireless charging
+    chown system system /sys/class/power_supply/wireless/capacity
+    chown system system /sys/class/power_supply/wireless/device/rtx
+    chown system system /sys/class/power_supply/wireless/device/rxdata
+    chown system system /sys/class/power_supply/wireless/device/txdata
+    chown system system /sys/class/power_supply/wireless/device/rxlen
+    chown system system /sys/class/power_supply/wireless/device/txlen
+    chown system system /sys/class/power_supply/wireless/device/ccreset
+    chown system system /sys/class/power_supply/wireless/device/status
+    chown system system /sys/class/power_supply/wireless/device/version
+    chown system system /sys/class/power_supply/wireless/device/features
+    chown system system /sys/class/power_supply/wireless/device/authtype
 
     # Adaptive charge
     chown system system /sys/class/power_supply/battery/charge_deadline
@@ -353,6 +386,7 @@ on post-fs-data
 on zygote-start
     # For PixelLogger configuration file.
     chmod 0771 /data/vendor/wifi
+    write /sys/kernel/vendor_sched/sys_uclamp_min 0
 
 on post-fs-data
     # Create the directories used by the Wireless subsystem
@@ -677,12 +711,12 @@ on property:sys.boot_completed=1
     # Setup final cpu.uclamp
     write /sys/kernel/vendor_sched/ta_uclamp_min 1
     write /sys/kernel/vendor_sched/fg_uclamp_min 0
-    write /sys/kernel/vendor_sched/bg_uclamp_max 103
+    write /sys/kernel/vendor_sched/bg_uclamp_max 615
+    write /sys/kernel/vendor_sched/sys_prefer_idle 0
     # cfs_rq clamp is using tg->uclamp setting
     # align it with the vendor_group setting
-    write /dev/cpuctl/background/cpu.uclamp.max 10
-
-    write /sys/kernel/vendor_sched/bg_group_throttle 512
+    write /dev/cpuctl/background/cpu.uclamp.max 60
+    write /sys/kernel/vendor_sched/bg_group_throttle 615
 
     # Setup groups for SF (RT used for SF RE, SF used for SF main)
     write /sys/kernel/vendor_sched/rt_uclamp_min 125
@@ -703,19 +737,6 @@ on property:sys.boot_completed=1
 
     # gvotables for dumpstate
     chown system system /sys/kernel/debug/gvotables
-
-    # Permission for wireless charging
-    chown system system /sys/class/power_supply/wireless/capacity
-    chown system system /sys/class/power_supply/wireless/device/rtx
-    chown system system /sys/class/power_supply/wireless/device/rxdata
-    chown system system /sys/class/power_supply/wireless/device/txdata
-    chown system system /sys/class/power_supply/wireless/device/rxlen
-    chown system system /sys/class/power_supply/wireless/device/txlen
-    chown system system /sys/class/power_supply/wireless/device/ccreset
-    chown system system /sys/class/power_supply/wireless/device/status
-    chown system system /sys/class/power_supply/wireless/device/version
-    chown system system /sys/class/power_supply/wireless/device/features
-    chown system system /sys/class/power_supply/wireless/device/authtype
 
     # AOC reset permission
     chown root system /sys/devices/platform/19000000.aoc/reset
@@ -861,6 +882,7 @@ on property:vendor.thermal.link_ready=1
     chown system system /dev/thermal/tz-by-name/neutral_therm/trip_point_0_hyst
     chown system system /dev/thermal/tz-by-name/usb_pwr_therm2/trip_point_0_temp
     chown system system /dev/thermal/tz-by-name/usb_pwr_therm2/trip_point_0_hyst
+    chown system system /dev/thermal/tz-by-name/usb_pwr_therm2/emul_temp
     chown system system /dev/thermal/cdev-by-name/thermal-cpufreq-0/user_vote
     chown system system /dev/thermal/cdev-by-name/thermal-cpufreq-1/user_vote
     chown system system /dev/thermal/cdev-by-name/thermal-cpufreq-2/user_vote
