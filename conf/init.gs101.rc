@@ -305,6 +305,7 @@ on init && property:ro.boot.hw.soc.rev=1
 
 on late-fs
     # Start bootanimation class before mount
+    start bootanim
     class_start animation
 
     # Mount RW partitions which need run fsck
@@ -676,7 +677,7 @@ on property:init.svc.vendor.charger=running
 on property:sys.boot_completed=1
 
     # Runtime fs tuning
-    write /sys/block/sda/queue/nr_requests 128
+    write /sys/block/sda/queue/nr_requests 64
     write /sys/block/sda/queue/iostats 1
     write /sys/block/sda/queue/iosched/slice_idle 8
     write /dev/sys/fs/by-name/userdata/data_io_flag 8
@@ -853,7 +854,13 @@ on property:vendor.thermal.link_ready=1
     write /dev/thermal/tz-by-name/soft_ocp_tpu/policy user_space
     write /dev/thermal/tz-by-name/soft_ocp_gpu/policy user_space
     write /dev/thermal/tz-by-name/soc/policy user_space
+    write /dev/thermal/tz-by-name/batoilo/policy user_space
+    write /sys/devices/virtual/pmic/mitigation/triggered_lvl/soft_ocp_cpu2_lvl 9000
+    write /sys/devices/virtual/pmic/mitigation/triggered_lvl/soft_ocp_gpu_lvl 9000
+    write /sys/devices/virtual/pmic/mitigation/triggered_lvl/soft_ocp_tpu_lvl 8500
     chown system system /dev/thermal/tz-by-name/soc/mode
+    chown system system /dev/thermal/tz-by-name/batoilo/trip_point_0_temp
+    chown system system /dev/thermal/tz-by-name/batoilo/trip_point_0_hyst
     chown system system /dev/thermal/tz-by-name/vdroop2/trip_point_0_temp
     chown system system /dev/thermal/tz-by-name/vdroop2/trip_point_0_hyst
     chown system system /dev/thermal/tz-by-name/vdroop1/trip_point_0_temp
