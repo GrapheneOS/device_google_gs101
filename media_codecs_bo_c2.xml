@@ -23,11 +23,13 @@
           <Limit name="block-count" range="36-32400" />
           <Limit name="blocks-per-second" min="24" max="1944000" />
           <Limit name="bitrate" range="1-120000000" />
-          <Limit name="frame-rate" range="1-120" />
+          <Limit name="frame-rate" range="1-180" />
           <Limit name="concurrent-instances" max="16" />
+          <Limit name="performance-point-1280x720" value="180" />
           <Limit name="performance-point-1920x1080" value="120" />
           <Limit name="performance-point-3840x2160" value="60" />
           <Feature name="adaptive-playback" />
+          <Feature name="can-swap-width-height" value="1" />
         </MediaCodec>
         <MediaCodec name="c2.google.av1.decoder.secure" type="video/av01">
           <Limit name="size" min="96x96" max="3840x2160" />
@@ -36,12 +38,14 @@
           <Limit name="block-count" range="36-32400" />
           <Limit name="blocks-per-second" min="24" max="1944000" />
           <Limit name="bitrate" range="1-120000000" />
-          <Limit name="frame-rate" range="1-120" />
+          <Limit name="frame-rate" range="1-180" />
           <Limit name="concurrent-instances" max="16" />
+          <Limit name="performance-point-1280x720" value="180" />
           <Limit name="performance-point-1920x1080" value="120" />
           <Limit name="performance-point-3840x2160" value="60" />
           <Feature name="adaptive-playback" />
           <Feature name="secure-playback" required="true" />
+          <Feature name="can-swap-width-height" value="1" />
         </MediaCodec>
     </Decoders>
 </MediaCodecs>
