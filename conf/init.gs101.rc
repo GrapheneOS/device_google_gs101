@@ -805,14 +805,12 @@ on post-fs-data
     symlink /mnt/vendor/persist/ss /data/vendor/ss/persist
     chown root system /data/vendor/ss/persist
     chmod 0770 /data/vendor/ss/persist
-    chown system system /dev/sg1
 
-    start storageproxyd
+    restart storageproxyd
 
 service storageproxyd /vendor/bin/storageproxyd -d /dev/trusty-ipc-dev0 \
         -r /dev/sg1 -p /data/vendor/ss -t ufs
-    class main
-    disabled
+    class early_hal
     user root
 
 # Write build info to kdebuginfo
@@ -855,9 +853,11 @@ on property:vendor.thermal.link_ready=1
     write /dev/thermal/tz-by-name/soft_ocp_gpu/policy user_space
     write /dev/thermal/tz-by-name/soc/policy user_space
     write /dev/thermal/tz-by-name/batoilo/policy user_space
+    write /sys/devices/virtual/pmic/mitigation/triggered_lvl/ocp_gpu_lvl 9000
+    write /sys/devices/virtual/pmic/mitigation/triggered_lvl/ocp_tpu_lvl 8500
     write /sys/devices/virtual/pmic/mitigation/triggered_lvl/soft_ocp_cpu2_lvl 9000
-    write /sys/devices/virtual/pmic/mitigation/triggered_lvl/soft_ocp_gpu_lvl 9000
-    write /sys/devices/virtual/pmic/mitigation/triggered_lvl/soft_ocp_tpu_lvl 8500
+    write /sys/devices/virtual/pmic/mitigation/triggered_lvl/soft_ocp_gpu_lvl 8000
+    write /sys/devices/virtual/pmic/mitigation/triggered_lvl/soft_ocp_tpu_lvl 7500
     chown system system /dev/thermal/tz-by-name/soc/mode
     chown system system /dev/thermal/tz-by-name/batoilo/trip_point_0_temp
     chown system system /dev/thermal/tz-by-name/batoilo/trip_point_0_hyst
@@ -897,6 +897,7 @@ on property:vendor.thermal.link_ready=1
     chown system system /dev/thermal/cdev-by-name/thermal-cpufreq-1/user_vote
     chown system system /dev/thermal/cdev-by-name/thermal-cpufreq-2/user_vote
     chown system system /dev/thermal/cdev-by-name/thermal-gpufreq-0/user_vote
+    chown system system /dev/thermal/cdev-by-name/tpu_cooling/user_vote
     chown system system /dev/thermal/cdev-by-name/fcc/cur_state
     chown system system /dev/thermal/cdev-by-name/dc_icl/cur_state
     chown system system /dev/thermal/cdev-by-name/wlc_fcc/cur_state
