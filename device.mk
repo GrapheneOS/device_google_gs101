@@ -1125,7 +1125,7 @@ DEVICE_PRODUCT_COMPATIBILITY_MATRIX_FILE := device/google/gs101/device_framework
 
 # Preopt SystemUI
 PRODUCT_DEXPREOPT_SPEED_APPS += \
-    SystemUIGoogle
+    SystemUI
 
 # Keymaster configuration
 PRODUCT_COPY_FILES += \
