@@ -478,8 +478,8 @@ PRODUCT_PACKAGES += \
 	android.hardware.drm@1.4-service.widevine \
 	liboemcrypto \
 
-ORIOLE_PRODUCT := %oriole
-RAVEN_PRODUCT := %raven
+ORIOLE_PRODUCT := oriole
+RAVEN_PRODUCT := raven
 ifneq (,$(filter $(ORIOLE_PRODUCT), $(TARGET_PRODUCT)))
         LOCAL_TARGET_PRODUCT := oriole
 else ifneq (,$(filter $(RAVEN_PRODUCT), $(TARGET_PRODUCT)))
