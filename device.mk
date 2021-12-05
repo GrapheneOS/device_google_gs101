@@ -26,6 +26,17 @@ AB_OTA_POSTINSTALL_CONFIG += \
 	FILESYSTEM_TYPE_system=ext4 \
 POSTINSTALL_OPTIONAL_system=true
 
+AB_OTA_PARTITIONS += \
+        bl1 \
+        pbl \
+        bl2 \
+        abl \
+        bl31 \
+        tzsw \
+        gsa \
+        ldfw \
+        modem
+
 # Set Vendor SPL to match platform
 VENDOR_SECURITY_PATCH = $(PLATFORM_SECURITY_PATCH)
 
@@ -1138,3 +1149,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Call deleteAllKeys if vold detects a factory reset
 PRODUCT_VENDOR_PROPERTIES += ro.crypto.metadata_init_delete_all_keys.enabled=true
+
+define target-radio-files $(notdir \
+	$(wildcard $(LOCAL_PATH)/fwimg/$(LOCAL_TARGET_PRODUCT)/*.img) \
+	)
+endef
