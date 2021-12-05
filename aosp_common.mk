@@ -14,6 +14,10 @@
 # limitations under the License.
 #
 
+OEM_APNS := true
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/apns-conf.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/apns-conf.xml
+
 #
 # All components inherited here go to system image
 #
