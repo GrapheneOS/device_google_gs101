@@ -27,4 +27,5 @@ LOCAL_PATH := $(call my-dir)
 
 ifeq ($(USES_DEVICE_GOOGLE_GS101),true)
   include $(call first-makefiles-under,$(LOCAL_PATH))
+  include device/google/gs101/AndroidBoardCommon.mk
 endif
