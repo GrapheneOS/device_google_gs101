@@ -24959,7 +24959,7 @@
       carrier_id="2126"
       mcc="311"
       mnc="480"
-      apn="CHARTER.RSLR.VZWENTP"
+      apn="VZWINTERNET"
       authtype="0"
       type="default,supl,dun"
       protocol="IPV4V6"
