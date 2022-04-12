@@ -22419,7 +22419,7 @@
     <boolean name="world_mode_enabled_bool" value="false" />
 </carrier_config>
 <carrier_config mcc="311" mnc="480" gid1="BA01490000000000">
-    <string name="carrier_config_version_string">spectrum_us-32000000487.48</string>
+    <string name="carrier_config_version_string">spectrum_us-32000000486.48</string>
     <string name="5g_icon_configuration_string">connected_mmwave:5G_Plus,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G</string>
     <string name="5g_icon_display_grace_period_string">connected_mmwave,any,3;not_restricted_rrc_idle,not_restricted_rrc_con,2</string>
     <string name="5g_icon_display_secondary_grace_period_string">connected_mmwave,not_restricted_rrc_idle,60</string>
