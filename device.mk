@@ -58,7 +58,8 @@ PRODUCT_SOONG_NAMESPACES += \
 	vendor/google/interfaces \
 	vendor/google_devices/common/proprietary/confirmatioui_hal \
 	vendor/google_nos/host/android \
-	vendor/google_nos/test/system-test-harness
+	vendor/google_nos/test/system-test-harness \
+	vendor/carriersettings-extractor
 
 LOCAL_KERNEL := $(TARGET_KERNEL_DIR)/Image.lz4
 
@@ -1191,3 +1192,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Call deleteAllKeys if vold detects a factory reset
 PRODUCT_VENDOR_PROPERTIES += ro.crypto.metadata_init_delete_all_keys.enabled=true
+
+PRODUCT_PACKAGES += \
+    extracted-carrierconfig \
+    extracted-apns
