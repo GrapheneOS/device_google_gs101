@@ -5,6 +5,7 @@ import /vendor/etc/init/hw/init.aoc.rc
 
 on early-init
     mount_all /vendor/etc/fstab.persist --early
+    mount_all /vendor/etc/fstab.modem --early
 
 on init
     # CPU0 cannot be offline
