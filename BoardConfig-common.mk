@@ -64,12 +64,7 @@ BOARD_USES_GENERIC_KERNEL_IMAGE := true
 BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
 BOARD_MOVE_GSI_AVB_KEYS_TO_VENDOR_BOOT := true
 TARGET_RECOVERY_WIPE := device/google/gs101/conf/recovery.wipe
-
-# This is the fstab file that will be included in the recovery image.  Note that
-# recovery doesn't care about the encryption settings, so it doesn't matter
-# whether we use the normal or the fips fstab here.
-TARGET_RECOVERY_FSTAB_GENRULE = gen_fstab.gs101
-
+TARGET_RECOVERY_FSTAB := device/google/gs101/conf/fstab.gs101
 TARGET_RECOVERY_PIXEL_FORMAT := ABGR_8888
 TARGET_RECOVERY_UI_MARGIN_HEIGHT := 165
 TARGET_RECOVERY_UI_LIB := \
