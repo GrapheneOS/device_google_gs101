@@ -543,7 +543,6 @@ endif
 
 # WiFi
 PRODUCT_PACKAGES += \
-	android.hardware.wifi-service \
 	wificond \
 	libwpa_client \
 	WifiOverlay \
