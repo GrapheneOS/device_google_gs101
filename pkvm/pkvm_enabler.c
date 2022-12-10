@@ -58,7 +58,7 @@ int main() {
     if (pid == 0) {
         execve(MISC_WRITER, newargv, newenvp);
         ALOGE("Could not execute " MISC_WRITER ": %d", errno);
-        _exit(EXIT_FAILURE);
+        _exit(EXIT_SUCCESS);
     }
 
     waitpid(pid, &wstatus, 0);
@@ -71,5 +71,5 @@ int main() {
         ALOGE(MISC_WRITER " terminated unexpectedly: %d", wstatus);
     }
 
-    exit(EXIT_FAILURE);
+    exit(EXIT_SUCCESS);
 }
