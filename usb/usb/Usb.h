@@ -19,6 +19,7 @@
 #include <android-base/file.h>
 #include <aidl/android/hardware/usb/BnUsb.h>
 #include <aidl/android/hardware/usb/BnUsbCallback.h>
+#include <aidl/android/hardware/usb/ext/BnUsbExt.h>
 #include <pixelusb/UsbOverheatEvent.h>
 #include <utils/Log.h>
 
@@ -91,6 +92,17 @@ struct Usb : public BnUsb {
     bool mUsbDataEnabled;
   private:
     pthread_t mPoll;
+};
+
+using ext::PortSecurityState;
+
+struct UsbExt : public ext::BnUsbExt {
+    UsbExt(std::shared_ptr<Usb> usb);
+
+    ScopedAStatus setPortSecurityState(const std::string& in_portName,
+                                       PortSecurityState in_state) override;
+
+    std::shared_ptr<Usb> mUsb;
 };
 
 } // namespace usb
